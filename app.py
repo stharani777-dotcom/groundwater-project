@@ -56,7 +56,7 @@ st.markdown("""
 
 @st.cache_data
 def load_and_process_data():
-    df = pd.read_csv("data/groundwater_data.csv", low_memory=False)
+    df = pd.read_csv("data/groundwater_data_small.csv", low_memory=False)
     
     # Deduplicate columns
     df = df.loc[:, ~df.columns.duplicated()].copy()
