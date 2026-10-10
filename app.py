@@ -253,9 +253,17 @@ with tab3:
 
     st.write("---")
     
-    st.download_button(
-        label="📥 Download District Dataset (CSV)",
-        data=filtered.to_csv(index=False),
-        file_name=f"{selected_district}_groundwater_filtered.csv",
-        mime="text/csv"
-    )
+    import io
+
+# Convert the filtered data into an Excel spreadsheet format
+output = io.BytesIO()
+with pd.ExcelWriter(output, engine='openpyxl') as writer:
+    filtered.to_excel(writer, index=False, sheet_name='Groundwater_Data')
+excel_data = output.getvalue()
+
+st.download_button(
+    label="📥 Download District Dataset (Excel)",
+    data=excel_data,
+    file_name=f"{selected_district}_groundwater_filtered.xlsx",
+    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+)
